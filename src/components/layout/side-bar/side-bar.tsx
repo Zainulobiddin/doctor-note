@@ -192,10 +192,11 @@ export default function MiniDrawer({children}: { children: React.ReactNode }) {
 
       <Box
         component="main"
-          className="bg-gray-100"
+          className=""
         sx={(theme) => ({
           flexGrow: 1,
           padding: theme.spacing(3),
+          background: "linear-gradient(135deg, #f8fafc 0%, rgba(219, 234, 254, 0.3) 100%)",
           //  paddingLeft: open ? `${drawerWidth}px` : `${theme.spacing(7) + 1}px`, 
            marginTop: `68px`,
           transition: theme.transitions.create("margin", {

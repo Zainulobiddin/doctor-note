@@ -29,12 +29,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import Image from "next/image";
-import photo1 from "#/photo1.jpg"
-import photo2 from "#/photo2.jpg"
-import photo3 from "#/photo3.jpg"
-import photo4 from "#/photo4.png"
-
-
+import photo1 from "#/photo11.png";
+import photo3 from "#/photo33.png";
 
 export default function Home() {
   const theme = useTheme();
@@ -47,20 +43,11 @@ export default function Home() {
       src: photo1,
       title: "Назорати беморонро бо чанд клик анҷом диҳед",
     },
-    {
-      id: 2,
-      src: photo2,
-      title: "Сабти осони ташхис, доруҳо ва санаҳои назорат",
-    },
+
     {
       id: 3,
       src: photo3,
       title: "Ба ҳар бемор диққати инфиродӣ диҳед — бо ёрии Doctor Note",
-    },
-    {
-      id: 4,
-      src: photo4,
-      title: "Аз даст надодани санаҳои муҳим — ҳеҷ гоҳ дигар фаромӯш намешавад",
     },
   ];
 
@@ -70,7 +57,6 @@ export default function Home() {
   return (
     <>
       <Container>
-
         <header className=" py-5 flex justify-between items-center">
           <Typography variant="h4">DoctorNote</Typography>
           <Box className="flex items-center gap-4">
@@ -138,10 +124,25 @@ export default function Home() {
           slidesPerView={1}
           autoplay={{ delay: 3000, disableOnInteraction: false }}
           loop={true}
+          className="rounded-2xl shadow-lg"
         >
           {swiperPhotos.map((img) => (
             <SwiperSlide key={img.id}>
-              <Image className="w-[80%] m-auto h-[500px] " src={img.src} alt="photo doctors" width={0} height={1000} />
+              <Box className="flex items-center justify-between gap-10 px-10 py-20 h-[500px] bg-gradient-to-r from-green-600 via-teal-500 to-sky-400 rounded-2xl">
+                <Typography
+                  variant="h4"
+                  className="w-[40%] text-white font-semibold leading-relaxed"
+                >
+                  {img.title}
+                </Typography>
+                <Image
+                  className="w-[40%] rounded-xl shadow-md object-cover"
+                  src={img.src}
+                  alt="photo doctors"
+                  width={0}
+                  height={0}
+                />
+              </Box>
             </SwiperSlide>
           ))}
         </Swiper>

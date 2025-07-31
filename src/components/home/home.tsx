@@ -15,15 +15,13 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import SmartphoneIcon from "@mui/icons-material/Smartphone";
 import LockIcon from "@mui/icons-material/Lock";
 import LanguageIcon from "@mui/icons-material/Language";
-// import Link from "next/link";
 import Container from "../container/container";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { A11y, Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -31,207 +29,369 @@ import "swiper/css/scrollbar";
 import Image from "next/image";
 import photo1 from "#/photo11.png";
 import photo3 from "#/photo33.png";
+import photo4 from "#/photo44.png";
+import phone1 from "#/phone1.png";
+import Link from "next/link";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import TelegramIcon from "@mui/icons-material/Telegram";
+import EmailIcon from "@mui/icons-material/Email";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import loginPhoto from "#/login.png";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 
 export default function Home() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [lang, setLang] = useState("");
-
+  const [open, setOpen] = useState(false);
   const swiperPhotos = [
     {
       id: 1,
+      src: phone1,
+      title: "Doctor Note — Ассистенти рақамии шумо дар назорати беморон",
+      description:
+        "Ба таври осон беморонро сабт намоед, назорат баред ва гузориш гиред",
+      bg: "from-[#a8edea] via-[#fed6e3] to-[#f5f7fa]",
+    },
+    {
+      id: 2,
       src: photo1,
       title: "Назорати беморонро бо чанд клик анҷом диҳед",
+      description:
+        "Ҳисобот, дорухат ва ташхисҳоро бе қоғаз ва дарҳол дидан гиред.",
+      bg: "from-[#fbc2eb] via-[#a6c1ee] to-[#f5f7fa]",
     },
-
     {
       id: 3,
       src: photo3,
-      title: "Ба ҳар бемор диққати инфиродӣ диҳед — бо ёрии Doctor Note",
+      title: "Ба ҳар бемор диққати шахсӣ диҳед — осон ва зуд.",
+      description:
+        "Барои ҳар бемор таърихи ҷудогона, ташхис ва табобат захира мешавад.",
+      bg: "from-[#cfd9df] via-[#e2ebf0] to-[#f5f7fa]",
+    },
+    {
+      id: 4,
+      src: photo4,
+      title: "Маълумоти тиббӣ — ҳамеша дар дастрасии шумо.",
+      description:
+        "Новобаста аз макон — дар телефон, планшет ё компютер беморонро назорат кунед.",
+      bg: "from-[#fddb92] via-[#d1fdff] to-[#f5f7fa]",
     },
   ];
 
   const handleChange = (event: SelectChangeEvent) => {
     setLang(event.target.value);
   };
+
+  const handleOpen = () => {
+    setOpen(!open);
+    console.log("salom");
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
-      <Container>
-        <header className=" py-5 flex justify-between items-center">
-          <Typography variant="h4">DoctorNote</Typography>
-          <Box className="flex items-center gap-4">
-            <Box sx={{ height: 40 }}>
-              {" "}
-              {/* пасттар шуд */}
-              <FormControl fullWidth sx={{ height: "100%" }}>
-                <InputLabel id="language-select-label" shrink={true}>
-                  Забон
-                </InputLabel>
+      <section className="bg-gradient-to-r from-[#fdfbfb] to-[#ebedee] shadow-md fixed top-0 left-0 right-0 z-50 ">
+        <Container>
+          <header className="py-6 px-4 rounded-xl flex justify-between items-center ">
+            <Typography variant="h4" className="text-gray-800">
+              DoctorNote
+            </Typography>
+            <Box className="flex items-center gap-4">
+              <Box sx={{ height: 40 }} className="hidden md:flex">
+                <FormControl fullWidth sx={{ height: "100%" }}>
+                  <InputLabel id="language-select-label" shrink={true}>
+                    Забон
+                  </InputLabel>
 
-                <Select
-                  value={lang}
-                  label="Забон"
-                  onChange={handleChange}
-                  displayEmpty
-                  inputProps={{ "aria-label": "Without label" }}
-                  sx={{
-                    height: "100%",
-                    minHeight: 40,
-                    fontSize: "0.85rem",
-                    pt: 0.5,
-                  }}
-                  renderValue={(selected) => {
-                    if (!selected) {
+                  <Select
+                    value={lang}
+                    label="Забон"
+                    onChange={handleChange}
+                    displayEmpty
+                    inputProps={{ "aria-label": "Without label" }}
+                    sx={{
+                      height: "100%",
+                      minHeight: 40,
+                      fontSize: "0.85rem",
+                      pt: 0.5,
+                    }}
+                    renderValue={(selected) => {
+                      if (!selected) {
+                        return (
+                          <Box display="flex" alignItems="center" gap={1}>
+                            <LanguageIcon color="action" fontSize="small" />
+                            Забон
+                          </Box>
+                        );
+                      }
+
                       return (
                         <Box display="flex" alignItems="center" gap={1}>
                           <LanguageIcon color="action" fontSize="small" />
-                          Забон
+                          {selected === "tj"
+                            ? "tj"
+                            : selected === "tu"
+                            ? "ru"
+                            : ""}
                         </Box>
                       );
-                    }
+                    }}
+                  >
+                    <MenuItem value={"tj"}>ru</MenuItem>
+                    <MenuItem value={"tu"}>tj</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
 
-                    return (
-                      <Box display="flex" alignItems="center" gap={1}>
-                        <LanguageIcon color="action" fontSize="small" />
-                        {selected === "tj"
-                          ? "tj"
-                          : selected === "tu"
-                          ? "ru"
-                          : ""}
-                      </Box>
-                    );
+              <Button
+                variant="outlined"
+                sx={{ height: 40, minWidth: 120, fontSize: "0.85rem" }}
+                onClick={handleOpen}
+              >
+                Даромад
+              </Button>
+            </Box>
+          </header>
+        </Container>
+      </section>
+
+      <section className="pt-40 bg-gradient-to-r from-[#fdfbfb] to-[#f7f8f8]">
+        <Container>
+          <Swiper
+            modules={[A11y, Autoplay, Pagination]}
+            spaceBetween={50}
+            slidesPerView={1}
+            autoplay={{ delay: 7000, disableOnInteraction: false }}
+            loop={true}
+            className="rounded-2xl shadow-lg"
+          >
+            {swiperPhotos.map((img) => (
+              <SwiperSlide key={img.id}>
+                <Box
+                  className={`flex items-center justify-between gap-10 px-10 py-20 h-[480px] bg-gradient-to-r ${img.bg} rounded-2xl`}
+                  sx={{
+                    flexDirection: { xs: "column-reverse", md: "row" },
+                    textAlign: { xs: "center", md: "left" },
+                    px: { xs: 4, md: 10 },
+                    py: { xs: 8, md: 20 },
+                    height: { xs: "auto", md: "480px" },
                   }}
                 >
-                  <MenuItem value={"tj"}>ru</MenuItem>
-                  <MenuItem value={"tu"}>tj</MenuItem>
-                </Select>
-              </FormControl>
+                  <Box
+                    className="flex flex-col gap-2"
+                    sx={{ maxWidth: { xs: "100%", md: "50%" } }}
+                  >
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        fontWeight: 600,
+                        color: "#2b2b2b",
+                        fontSize: { xs: "1.8rem", md: "3rem" },
+                      }}
+                    >
+                      {img.title}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        mt: 2,
+                        fontSize: { xs: "1rem", md: "1.25rem" },
+                        color: "#444",
+                      }}
+                    >
+                      {img.description}
+                    </Typography>
+                  </Box>
+
+                  <Image
+                    className="rounded-xl object-contain max-h-[450px]"
+                    src={img.src}
+                    alt="photo doctors"
+                    width={0}
+                    height={0}
+                    style={{
+                      width: "100%",
+                      // maxWidth: "450px",
+                    }}
+                  />
+                </Box>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
+          <Box sx={{ py: 10 }}>
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              gutterBottom
+              textAlign="center"
+            >
+              Чаро Doctor Note?
+            </Typography>
+
+            <Box
+              display="flex"
+              flexWrap="wrap"
+              justifyContent="center"
+              gap={4}
+              mt={4}
+            >
+              {features.map(({ icon, title, description }, index) => (
+                <Box
+                  key={index}
+                  width={isMobile ? "90%" : "30%"}
+                  textAlign="center"
+                  px={3}
+                  py={4}
+                  borderRadius={4}
+                  boxShadow={3}
+                  bgcolor="#ffffff"
+                  sx={{
+                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                    "&:hover": {
+                      transform: "scale(1.02)",
+                      boxShadow: 6,
+                      background: "#f0f4f8",
+                    },
+                  }}
+                >
+                  <Box
+                    fontSize={64}
+                    color="#4dabf7"
+                    mb={2}
+                    className="w-[70px] m-auto p-[10px] flex items-center justify-center rounded-[15px] bg-[#e3f2fd]"
+                  >
+                    {icon}
+                  </Box>
+                  <Typography
+                    color="#1e88e5"
+                    variant="h6"
+                    fontWeight="bold"
+                    gutterBottom
+                  >
+                    {title}
+                  </Typography>
+                  <Typography color="textSecondary" fontSize="0.95rem">
+                    {description}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        </Container>
+      </section>
+
+      <footer className="bg-gray-900 py-3">
+        <Container>
+          <Box
+            component="footer"
+            sx={{
+              padding: "2rem 1rem",
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              justifyContent: "space-between",
+              alignItems: "start",
+              textAlign: { xs: "center", sm: "left" },
+              color: "white",
+            }}
+          >
+            <Box className="flex flex-col gap-2 items-start">
+              <Typography variant="h4">Doctor Note</Typography>
+              <Typography variant="body2" className="text-gray-400">
+                Ассистенти рақамии назорати беморон.
+              </Typography>
+              <Box className="flex items-center gap-3 mt-2">
+                <LocalPhoneIcon color="info" className="cursor-pointer " />
+                <TelegramIcon color="info" className="cursor-pointer " />
+                <EmailIcon color="info" className="cursor-pointer " />
+                <InstagramIcon color="info" className="cursor-pointer " />
+              </Box>
             </Box>
 
-            <Button
-              variant="outlined"
-              color="success"
-              sx={{ height: 40, minWidth: 120, fontSize: "0.85rem" }}
-            >
-              Даромад
-            </Button>
+            <Box>
+              <Box sx={{ display: "flex", gap: "1rem", mt: { xs: 2, sm: 0 } }}>
+                <Link href="#" color="inherit">
+                  Хизматҳо
+                </Link>
+                <Link href="#" color="inherit">
+                  Тамос
+                </Link>
+                <Link href="#" color="inherit">
+                  Шартҳо
+                </Link>
+              </Box>
+              <Typography className="text-gray-400">
+                © {new Date().getFullYear()} Ҳамаи ҳуқуқҳо ҳифз шудаанд.
+              </Typography>
+            </Box>
           </Box>
-        </header>
+        </Container>
+      </footer>
 
-        <Swiper
-          modules={[A11y, Autoplay, Pagination]}
-          spaceBetween={50}
-          slidesPerView={1}
-          autoplay={{ delay: 3000, disableOnInteraction: false }}
-          loop={true}
-          className="rounded-2xl shadow-lg"
+      <Fragment>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
         >
-          {swiperPhotos.map((img) => (
-            <SwiperSlide key={img.id}>
-              <Box className="flex items-center justify-between gap-10 px-10 py-20 h-[500px] bg-gradient-to-r from-green-600 via-teal-500 to-sky-400 rounded-2xl">
-                <Typography
-                  variant="h4"
-                  className="w-[40%] text-white font-semibold leading-relaxed"
-                >
-                  {img.title}
-                </Typography>
-                <Image
-                  className="w-[40%] rounded-xl shadow-md object-cover"
-                  src={img.src}
-                  alt="photo doctors"
-                  width={0}
-                  height={0}
-                />
-              </Box>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-
-        <Box sx={{ py: 8 }}>
-          {/* Hero Section */}
-          <Box textAlign="center" mb={8}>
-            <Typography variant="h3" fontWeight="bold" gutterBottom>
-              Doctor Note — Ассистенти рақамии шумо дар назорати беморон
-            </Typography>
-            <Typography variant="h6" color="text.secondary" mb={4}>
-              Ба таври осон беморонро сабт намоед, назорат баред ва гузориш
-              гиред
-            </Typography>
-          </Box>
-
-          {/* Features Section */}
-          <Typography
-            variant="h4"
-            fontWeight="bold"
-            gutterBottom
-            textAlign="center"
-          >
-            Чаро Doctor Note?
-          </Typography>
-
-          <Box
-            display="flex"
-            flexWrap="wrap"
-            justifyContent="center"
-            gap={4}
-            mt={4}
-          >
-            {features.map(({ icon, title, description }, index) => (
-              <Box
-                key={index}
-                width={isMobile ? "100%" : "30%"}
-                textAlign="center"
-                px={2}
-                py={3}
-                borderRadius={3}
-                boxShadow={2}
-                bgcolor="background.paper"
-              >
-                <Box fontSize={50} color="success.main" mb={1}>
-                  {icon}
-                </Box>
-                <Typography variant="h6" fontWeight="bold" gutterBottom>
-                  {title}
-                </Typography>
-                <Typography color="text.secondary">{description}</Typography>
-              </Box>
-            ))}
-          </Box>
-        </Box>
-      </Container>
+          <DialogContent>
+            <Box className="md:w-[320px] h-[350px] flex flex-col gap-2">
+              <Image
+                src={loginPhoto}
+                alt="image login"
+                width={320}
+                height={200}
+              />
+              <p className="text-[18px] font-semibold  ">Тарзи даромаданро интихоб кунед:</p>
+              <Link href={'/login'}>
+              <Button className="w-full" variant="contained">Даромад</Button>
+              </Link>
+              <Link href={'/register'}>
+              <Button className="w-full" variant="outlined">Бақайдгирӣ</Button>
+              </Link>
+            </Box>
+          </DialogContent>
+        </Dialog>
+      </Fragment>
     </>
   );
 }
 
 const features = [
   {
-    icon: <LocalHospitalIcon />,
+    icon: <LocalHospitalIcon sx={{ width: "60px", height: "60px" }} />,
     title: "Назорати беморон",
     description:
       "Сабти маълумоти бемор, ташхисҳо ва дорухатҳо дар як платформа.",
   },
   {
-    icon: <AccessTimeIcon />,
+    icon: <AccessTimeIcon sx={{ width: "60px", height: "60px" }} />,
     title: "Огоҳии назоратӣ",
     description: "Система ба шумо ёдрас мекунад кай бемор бояд назорат шавад.",
   },
   {
-    icon: <BarChartIcon />,
+    icon: <BarChartIcon sx={{ width: "60px", height: "60px" }} />,
     title: "Ҳисоботи оморӣ",
     description: "Гузориш ва диаграммаҳо барои таҳлили натиҷаҳои табобат.",
   },
   {
-    icon: <SmartphoneIcon />,
+    icon: <SmartphoneIcon sx={{ width: "60px", height: "60px" }} />,
     title: "Дастрасӣ аз ҳама ҷо",
     description: "Платформа дар телефон ва компютер кор мекунад.",
   },
   {
-    icon: <LockIcon />,
+    icon: <LockIcon sx={{ width: "60px", height: "60px" }} />,
     title: "Амнияти баланд",
     description: "Маълумоти беморон бо рамзгузорӣ муҳофизат мешавад.",
   },
   {
-    icon: <LanguageIcon />,
+    icon: <LanguageIcon sx={{ width: "60px", height: "60px" }} />,
     title: "Забони тоҷикӣ",
     description: "Интерфейс бо тоҷикӣ ва русӣ — барои ҳамаи табибон мувофиқ.",
   },

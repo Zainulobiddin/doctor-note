@@ -39,46 +39,45 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import loginPhoto from "#/login.png";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
+import logo from '#/logo.png';
 
 export default function Home() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [lang, setLang] = useState("");
   const [open, setOpen] = useState(false);
-  const swiperPhotos = [
-    {
-      id: 1,
-      src: phone1,
-      title: "Doctor Note — Ассистенти рақамии шумо дар назорати беморон",
-      description:
-        "Ба таври осон беморонро сабт намоед, назорат баред ва гузориш гиред",
-      bg: "from-[#a8edea] via-[#fed6e3] to-[#f5f7fa]",
-    },
-    {
-      id: 2,
-      src: photo1,
-      title: "Назорати беморонро бо чанд клик анҷом диҳед",
-      description:
-        "Ҳисобот, дорухат ва ташхисҳоро бе қоғаз ва дарҳол дидан гиред.",
-      bg: "from-[#fbc2eb] via-[#a6c1ee] to-[#f5f7fa]",
-    },
-    {
-      id: 3,
-      src: photo3,
-      title: "Ба ҳар бемор диққати шахсӣ диҳед — осон ва зуд.",
-      description:
-        "Барои ҳар бемор таърихи ҷудогона, ташхис ва табобат захира мешавад.",
-      bg: "from-[#cfd9df] via-[#e2ebf0] to-[#f5f7fa]",
-    },
-    {
-      id: 4,
-      src: photo4,
-      title: "Маълумоти тиббӣ — ҳамеша дар дастрасии шумо.",
-      description:
-        "Новобаста аз макон — дар телефон, планшет ё компютер беморонро назорат кунед.",
-      bg: "from-[#fddb92] via-[#d1fdff] to-[#f5f7fa]",
-    },
-  ];
+const swiperPhotos = [
+  {
+    id: 1,
+    src: phone1,
+    title: "Doctor Note — Ассистенти рақамии шумо дар назорати беморон",
+    description: "Ба таври осон беморонро сабт намоед, назорат баред ва гузориш гиред",
+    bg: "from-[#bbdefb] via-[#64b5f6] to-[#1e88e5]", // кабуди равшан → миёна → торик
+  },
+  {
+    id: 2,
+    src: photo1,
+    title: "Назорати беморонро бо чанд клик анҷом диҳед",
+    description: "Ҳисобот, дорухат ва ташхисҳоро бе қоғаз ва дарҳол дидан гиред.",
+    bg: "from-[#b3e5fc] via-[#4fc3f7] to-[#0288d1]", // обии равшан → кабуди миёна → обии торик
+  },
+  {
+    id: 3,
+    src: photo3,
+    title: "Ба ҳар бемор диққати шахсӣ диҳед — осон ва зуд.",
+    description: "Барои ҳар бемор таърихи ҷудогона, ташхис ва табобат захира мешавад.",
+    bg: "from-[#e1f5fe] via-[#81d4fa] to-[#039be5]", // обии паст → миёна → зич
+  },
+  {
+    id: 4,
+    src: photo4,
+    title: "Маълумоти тиббӣ — ҳамеша дар дастрасии шумо.",
+    description: "Новобаста аз макон — дар телефон, планшет ё компютер беморонро назорат кунед.",
+    bg: "from-[#e3f2fd] via-[#90caf9] to-[#1565c0]", // сабуки кабуд → миёна → торик
+  },
+];
+
+
 
   const handleChange = (event: SelectChangeEvent) => {
     setLang(event.target.value);
@@ -97,10 +96,8 @@ export default function Home() {
     <>
       <section className="bg-gradient-to-r from-[#fdfbfb] to-[#ebedee] shadow-md fixed top-0 left-0 right-0 z-50 ">
         <Container>
-          <header className="py-6 px-4 rounded-xl flex justify-between items-center ">
-            <Typography variant="h4" className="text-gray-800">
-              DoctorNote
-            </Typography>
+          <header className="px-4 md:px-0 h-[80px] rounded-xl flex justify-between items-center ">
+            <Image src={logo} alt="logo doctor note"  width={200} height={100} className="w-[120px] h-[120px] object-contain" />
             <Box className="flex items-center gap-4">
               <Box sx={{ height: 40 }} className="hidden md:flex">
                 <FormControl fullWidth sx={{ height: "100%" }}>

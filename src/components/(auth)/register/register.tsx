@@ -1,9 +1,5 @@
 "use client";
 
-// import InputLabel from "@mui/material/InputLabel";
-// import MenuItem from "@mui/material/MenuItem";
-// import FormControl from "@mui/material/FormControl";
-// import Select from "@mui/material/Select";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import Box from "@mui/material/Box";
@@ -46,7 +42,7 @@ export default function Register() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center w-[400px] h-[500px] border border-blue-500 rounded-2xl">
       <Box
         component="form"
         onSubmit={handleSubmit}
@@ -56,14 +52,14 @@ export default function Register() {
         className="flex flex-col m-auto w-[300px] h-[100vh] items-center justify-center"
       >
         <Typography variant="h6" className="text-center font-bold ">
-          Wellcome to{" "}
-          <span className="text-blue-600 font-bold">Nazorat Med</span>
+          Хушомадед ба{" "}
+          <span className="text-blue-600 font-bold">Doctor Note</span>
         </Typography>
 
         <TextField
           className=""
           id="outlined-basic"
-          label="Full Name"
+          label="Номи пурра"
           variant="outlined"
           onChange={({ target }) =>
             setFormRegister({ ...formRegister, fullName: target.value })
@@ -73,7 +69,7 @@ export default function Register() {
         <TextField
           className=""
           id="outlined-basic"
-          label="Phone number"
+          label="Номери телефон"
           variant="outlined"
           onChange={({ target }) =>
             setFormRegister({ ...formRegister, phoneNumber: target.value })
@@ -82,7 +78,7 @@ export default function Register() {
         <TextField
           className=""
           id="outlined-basic"
-          label="Email"
+          label="Емайл"
           variant="outlined"
           onChange={({ target }) =>
             setFormRegister({ ...formRegister, email: target.value })
@@ -91,7 +87,7 @@ export default function Register() {
         <TextField
           className=""
           id="outlined-basic"
-          label="Password"
+          label="Парол"
           onChange={({ target }) =>
             setFormRegister({ ...formRegister, password: target.value })
           }
@@ -109,36 +105,13 @@ export default function Register() {
           }}
         />
 
-        {/* <TextField
-          className=""
-          id="outlined-basic"
-          label=""
-          variant="outlined"
-          type="date"
-        /> */}
-        {/* <Box sx={{ minWidth: 120 }}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              // value={age}
-              label="Age"
-              // onChange={handleChange}
-            >
-              <MenuItem value={""}>Man</MenuItem>
-              <MenuItem value={""}>Woman</MenuItem>
-            </Select>
-          </FormControl>
-        </Box> */}
-
         <Button variant="contained" type="submit">
-          Submit
+          пешниҳод
         </Button>
         <Box className="flex items-center justify-between">
-          <h5>Have already an account? </h5>
+          <h5>Оё аллакай ҳисоб доред? </h5>
           <Link href={"/login"} className="underline">
-            Login here
+            Даромад инҷо
           </Link>
         </Box>
       </Box>

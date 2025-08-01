@@ -1,47 +1,96 @@
 "use client";
-import { Box, Card, CardContent, CardHeader, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import { People as UsersIcon } from "@mui/icons-material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
+import { usePatientsStore } from "@/app/store/patients/patients";
+import { useEffect } from "react";
+import EditSquareIcon from "@mui/icons-material/EditSquare";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 export default function Patients() {
+  const { getPatients, patients } = usePatientsStore();
+
+  console.log("patients: ", patients);
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 70 },
-    {
-      field: "fullName",
-      headerName: "Full name",
-      description: "This column has a value getter and is not sortable.",
-      sortable: false,
-      width: 160,
-      valueGetter: (value, row) =>
-        `${row.firstName || ""} ${row.lastName || ""}`,
-    },
+   {
+  field: "fullName",
+  headerName: "Full name",
+  width: 120,
+  sortable: false,
+  renderCell: (params) => (
+    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+      <img
+        src={params.row.image}
+        alt={params.row.fullName}
+        width={32}
+        height={32}
+        style={{
+          borderRadius: "50%",
+          objectFit: "cover",
+        }}
+      />
+      <span>{params.row.fullName}</span>
+    </div>
+  ),
+},
+
 
     {
-      field: "age",
-      headerName: "Age",
+      field: "birthDate",
+      headerName: "Birth Date",
       type: "number",
-      width: 90,
+      width: 150,
     },
-    { field: "phone", headerName: "Phone", width: 130 },
-    { field: "latestDiagnosis", headerName: "Latest diagnosis", width: 130 },
-    { field: "status", headerName: "Status", width: 130 },
-    { field: "actions", headerName: "Actions", width: 130 },
-  ];
-
-  const rows = [
-    { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-    { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-    { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-    { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-    { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-    { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-    { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-    { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-    { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
+    { field: "phone", headerName: "Phone", width: 170 },
+    { field: "diagnosis", headerName: "Diagnosis", width: 150 },
+    { field: "symptoms", headerName: "Symptoms", width: 120 },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 130,
+      renderCell: (params) => (
+        <span
+          style={{ color: params.value ? "green" : "blue", fontWeight: 600 }}
+        >
+          {params.value ? "Шифо ёфт" : "Дар мушоҳида"}
+        </span>
+      ),
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 120,
+      renderCell: () => (
+        <Box>
+          <IconButton color="primary">
+            <EditSquareIcon />
+          </IconButton>
+          <IconButton color="error">
+            <DeleteForeverIcon />
+          </IconButton>
+          <IconButton color="secondary">
+            <RemoveRedEyeIcon />
+          </IconButton>
+        </Box>
+      ),
+    },
   ];
 
   const paginationModel = { page: 0, pageSize: 5 };
+
+  useEffect(() => {
+    getPatients();
+  }, []);
 
   return (
     <div>
@@ -107,9 +156,9 @@ export default function Patients() {
         />
 
         <CardContent sx={{ p: { xs: 3, md: 4 } }}>
-          <Paper sx={{ height: 400, width: "100%" }}>
+          <Paper sx={{ height: 400, width: "97%", margin: "0 auto" }}>
             <DataGrid
-              rows={rows}
+              rows={patients}
               columns={columns}
               initialState={{ pagination: { paginationModel } }}
               pageSizeOptions={[5, 10]}

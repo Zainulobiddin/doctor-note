@@ -12,36 +12,41 @@ import {
   Drawer as MuiDrawer,
   CssBaseline,
   List,
-  Divider,
   Box,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  InputLabel,
+  SelectChangeEvent,
 } from "@mui/material";
+import LanguageIcon from "@mui/icons-material/Language";
 import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import MenuItem from "@mui/material/MenuItem";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import SettingsIcon from "@mui/icons-material/Settings";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
+
+
 
 const drawerWidth = 220;
-// const closedDrawerWidth = 0;
 const menuItems = [
   { text: "Dashboard", icon: <DashboardIcon />, href: "/dashboard" },
   { text: "Patients", icon: <GroupIcon />, href: "/patients" },
   { text: "Add Patient", icon: <GroupAddIcon />, href: "/add-patient" },
   { text: "Appointments", icon: <CalendarMonthIcon />, href: "/appointments" },
-];
-
-const menuItems2 = [
   { text: "Reports", icon: <BarChartIcon />, href: "/reports" },
   { text: "Settings", icon: <SettingsIcon />, href: "/settings" },
+  {text: 'Profile', icon: <AccountCircleIcon />, href: '/profile' }
 ];
-
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -49,7 +54,6 @@ const openedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   // 90 305 12 96
-
 
   overflowX: "hidden",
 });
@@ -113,21 +117,25 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function MiniDrawer({children}: { children: React.ReactNode }) {
+export default function MiniDrawer({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [open, setOpen] = useState(false);
+  const [lang, setLang] = useState("");
 
+  const handleChange = (event: SelectChangeEvent) => {
+    setLang(event.target.value);
+  };
   const handleDrawerOpen = () => {
     setOpen(!open);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
   };
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} sx={{ backgroundColor: "white" }}>
+      <AppBar position="fixed" sx={{ backgroundColor: "white", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)", background: '#fdfbfb' }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -148,41 +156,90 @@ export default function MiniDrawer({children}: { children: React.ReactNode }) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" className="text-gray-800">
-            Doctor Note
-          </Typography>
+
+          {/* <Container> */}
+            <Box className="max-w-[1200px] m-auto flex items-center justify-between w-full px-1 py-1">
+              <Typography
+                variant="h4"
+                noWrap
+                component="div"
+                className="text-gray-800"
+              >
+                Doctor Note
+              </Typography>
+
+              <Box className="flex items-center gap-2">
+                <Box sx={{ height: 40 }} className="hidden md:flex">
+                  <FormControl fullWidth sx={{ height: "100%" }}>
+                    <InputLabel id="language-select-label" shrink={true}>
+                      Забон
+                    </InputLabel>
+
+                    <Select
+                      value={lang}
+                      label="Забон"
+                      onChange={handleChange}
+                      color="primary"
+                      displayEmpty
+                      inputProps={{ "aria-label": "Without label" }}
+                      sx={{
+                        height: "100%",
+                        minHeight: 40,
+                        fontSize: "0.85rem",
+                        pt: 0.5,
+                      }}
+                      renderValue={(selected) => {
+                        if (!selected) {
+                          return (
+                            <Box display="flex" alignItems="center" gap={1}>
+                              <LanguageIcon color="action" fontSize="small" />
+                              Забон
+                            </Box>
+                          );
+                        }
+
+                        return (
+                          <Box display="flex" alignItems="center" gap={1}>
+                            <LanguageIcon color="action" fontSize="small" />
+                            {selected === "tj"
+                              ? "tj"
+                              : selected === "tu"
+                              ? "ru"
+                              : ""}
+                          </Box>
+                        );
+                      }}
+                    >
+                      <MenuItem value={"tj"}>ru</MenuItem>
+                      <MenuItem value={"tu"}>tj</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
+
+                <IconButton color="primary">
+                  <NotificationsNoneIcon />
+                </IconButton>
+                <IconButton color="primary">
+                  <AccountCircleIcon/>
+                </IconButton>
+                  
+              </Box>
+            </Box>
+          {/* </Container> */}
         </Toolbar>
       </AppBar>
 
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
+        <DrawerHeader className="mt-10 "></DrawerHeader>
+        {/* <Divider /> */}
 
-        <List>
+        <List className="">
           {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
               <Link href={item.href} passHref>
-                <ListItemButton>
+                <ListItemButton className="hover:bg-gray-300 w-[220px]">
                   <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.text} />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-          ))}
-        </List>
-
-        <Divider />
-        <List>
-          {menuItems2.map((item) => (
-            <ListItem key={item.text} disablePadding>
-              <Link href={item.href} passHref>
-                <ListItemButton>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.text} />
+                  <ListItemText className="text-blue-900 font-bold" primary={item.text} />
                 </ListItemButton>
               </Link>
             </ListItem>
@@ -192,18 +249,15 @@ export default function MiniDrawer({children}: { children: React.ReactNode }) {
 
       <Box
         component="main"
-          className=""
+        className="bg-gradient-to-r from-[#fdfbfb] to-[#f7f8f8]"
         sx={(theme) => ({
           flexGrow: 1,
           padding: theme.spacing(3),
-          background: "linear-gradient(135deg, #f8fafc 0%, rgba(219, 234, 254, 0.3) 100%)",
-          //  paddingLeft: open ? `${drawerWidth}px` : `${theme.spacing(7) + 1}px`, 
-           marginTop: `68px`,
+          marginTop: `66px`,
           transition: theme.transitions.create("margin", {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
           }),
-        // marginLeft: open ? `${drawerWidth}px` : `${closedDrawerWidth}px`
         })}
       >
         {children}

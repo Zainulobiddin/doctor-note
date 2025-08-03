@@ -48,7 +48,6 @@ export const useAuth = create<AuthState>((set) => ({
         data
       );
 
-      console.log(response);
       if ((response.status === 200 || response.status === 201) && response?.data?.token) {
         localStorage.setItem("token", response.data.token);
         set({ token: response?.data?.token });

@@ -8,7 +8,6 @@ import {
   AppBarProps as MuiAppBarProps,
   Toolbar,
   IconButton,
-  Typography,
   Drawer as MuiDrawer,
   CssBaseline,
   List,
@@ -17,7 +16,6 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  InputLabel,
   SelectChangeEvent,
 } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -27,12 +25,13 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import BarChartIcon from "@mui/icons-material/BarChart";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Image from "next/image";
+import logo from "#/logo.png";
 
 
 
@@ -43,18 +42,16 @@ const menuItems = [
   { text: "Patients", icon: <GroupIcon />, href: "/patients" },
   { text: "Add Patient", icon: <GroupAddIcon />, href: "/add-patient" },
   { text: "Appointments", icon: <CalendarMonthIcon />, href: "/appointments" },
-  { text: "Reports", icon: <BarChartIcon />, href: "/reports" },
   { text: "Settings", icon: <SettingsIcon />, href: "/settings" },
-  {text: 'Profile', icon: <AccountCircleIcon />, href: '/profile' }
+  { text: "Profile", icon: <AccountCircleIcon />, href: "/profile" },
 ];
+
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
-  // 90 305 12 96
-
   overflowX: "hidden",
 });
 
@@ -135,7 +132,14 @@ export default function MiniDrawer({
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" sx={{ backgroundColor: "white", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)", background: '#fdfbfb' }}>
+      <AppBar
+        position="fixed"
+        sx={{
+          backgroundColor: "white",
+          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
+          background: "#fdfbfb",
+        }}
+      >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -158,73 +162,37 @@ export default function MiniDrawer({
           </IconButton>
 
           {/* <Container> */}
-            <Box className="max-w-[1200px] m-auto flex items-center justify-between w-full px-1 py-1">
-              <Typography
-                variant="h4"
-                noWrap
-                component="div"
-                className="text-gray-800"
-              >
-                Doctor Note
-              </Typography>
+          <Box className="max-w-[1200px] m-auto flex items-center justify-between w-full px-1 py-1">
+            <Image
+              src={logo}
+              alt="logo doctor note"
+              width={200}
+              height={100}
+              className="w-[120px] h-[80px] object-cover"
+            />
 
-              <Box className="flex items-center gap-2">
-                <Box sx={{ height: 40 }} className="hidden md:flex">
-                  <FormControl fullWidth sx={{ height: "100%" }}>
-                    <InputLabel id="language-select-label" shrink={true}>
-                      Забон
-                    </InputLabel>
+            <Box className="flex items-center gap-2">
+              <FormControl variant="outlined" size="small">
+                <Select
+                  value={lang}
+                  onChange={handleChange}
+                  startAdornment={
+                    <LanguageIcon className="mr-2 text-gray-500" />
+                  }
+                >
+                  <MenuItem value="tj">tj</MenuItem>
+                  <MenuItem value="ru">ru</MenuItem>
+                </Select>
+              </FormControl>
 
-                    <Select
-                      value={lang}
-                      label="Забон"
-                      onChange={handleChange}
-                      color="primary"
-                      displayEmpty
-                      inputProps={{ "aria-label": "Without label" }}
-                      sx={{
-                        height: "100%",
-                        minHeight: 40,
-                        fontSize: "0.85rem",
-                        pt: 0.5,
-                      }}
-                      renderValue={(selected) => {
-                        if (!selected) {
-                          return (
-                            <Box display="flex" alignItems="center" gap={1}>
-                              <LanguageIcon color="action" fontSize="small" />
-                              Забон
-                            </Box>
-                          );
-                        }
-
-                        return (
-                          <Box display="flex" alignItems="center" gap={1}>
-                            <LanguageIcon color="action" fontSize="small" />
-                            {selected === "tj"
-                              ? "tj"
-                              : selected === "tu"
-                              ? "ru"
-                              : ""}
-                          </Box>
-                        );
-                      }}
-                    >
-                      <MenuItem value={"tj"}>ru</MenuItem>
-                      <MenuItem value={"tu"}>tj</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-
-                <IconButton color="primary">
-                  <NotificationsNoneIcon />
-                </IconButton>
-                <IconButton color="primary">
-                  <AccountCircleIcon/>
-                </IconButton>
-                  
-              </Box>
+              <IconButton color="primary">
+                <NotificationsNoneIcon />
+              </IconButton>
+              <IconButton color="primary">
+                <AccountCircleIcon />
+              </IconButton>
             </Box>
+          </Box>
           {/* </Container> */}
         </Toolbar>
       </AppBar>
@@ -239,7 +207,10 @@ export default function MiniDrawer({
               <Link href={item.href} passHref>
                 <ListItemButton className="hover:bg-gray-300 w-[220px]">
                   <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText className="text-blue-900 font-bold" primary={item.text} />
+                  <ListItemText
+                    className="text-blue-900 font-bold"
+                    primary={item.text}
+                  />
                 </ListItemButton>
               </Link>
             </ListItem>

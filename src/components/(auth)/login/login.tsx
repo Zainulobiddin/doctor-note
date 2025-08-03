@@ -17,6 +17,7 @@ export default function Login() {
   const [showPassword, setShowpassword] = useState(false);
   const router = useRouter();
   const login = useAuth((state) => state.login);
+  
   const [formLogin, setFormLogin] = useState({
     fullName: "",
     password: "",
@@ -59,7 +60,7 @@ export default function Login() {
         <TextField
           className=""
           id="outlined-basic"
-          label="номи пурра"
+          label="Емайл"
           variant="outlined"
           onChange={({ target }) => setFormLogin({ ...formLogin, fullName: target.value })}
         />

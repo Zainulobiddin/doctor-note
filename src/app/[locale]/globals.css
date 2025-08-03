@@ -4,7 +4,6 @@
 
 .Montserrat {
     font-family: "Montserrat", sans-serif;
-    color: #0000ff;
 }
 
 @custom-variant dark (&:is(.dark *));
